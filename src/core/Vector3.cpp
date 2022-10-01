@@ -6,25 +6,25 @@
 #include <math.h>
 #endif
 
-const Vector3 Vector3::Zero()
+const Vector3 Vector3::zero()
 {
     Vector3 ret(0., 0., 0.);
     return ret;
 }
 
-const Vector3 Vector3::UnitX()
+const Vector3 Vector3::unitX()
 {
     Vector3 ret(1., 0., 0.);
     return ret;
 }
 
-const Vector3 Vector3::UnitY()
+const Vector3 Vector3::unitY()
 {
     Vector3 ret(0., 1., 0.);
     return ret;
 }
 
-const Vector3 Vector3::UnitZ()
+const Vector3 Vector3::unitZ()
 {
     Vector3 ret(0., 0., 1.);
     return ret;
@@ -46,7 +46,7 @@ Vector3& Vector3::operator/=(const double rhs)
     return *this;
 }
 
-Vector3& Vector3::operator+=(const Vector3 rhs)
+Vector3& Vector3::operator+=(const Vector3& rhs)
 {
     x += rhs.x;
     y += rhs.y;
@@ -54,7 +54,7 @@ Vector3& Vector3::operator+=(const Vector3 rhs)
     return *this;
 }
 
-Vector3& Vector3::operator-=(const Vector3 rhs)
+Vector3& Vector3::operator-=(const Vector3& rhs)
 {
     x -= rhs.x;
     y -= rhs.y;
@@ -93,7 +93,7 @@ const double Vector3::angle(const Vector3& rhs) const
     return acos(dot(rhs) / (norm() * rhs.norm()));
 }
 
-std::ostream& operator<<(std::ostream& os, const Vector3 obj)
+std::ostream& operator<<(std::ostream& os, const Vector3& obj)
 {
     os << "(" << obj.x << "," << obj.y << "," << obj.z << ")";
     return os;
