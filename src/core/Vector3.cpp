@@ -3,7 +3,7 @@
 #ifdef ARDUINO
 #include "Arduino.h"
 #else
-#include <math.h>
+#include <cmath>
 #endif
 
 const Vector3 Vector3::zero()

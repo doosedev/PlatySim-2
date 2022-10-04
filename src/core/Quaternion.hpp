@@ -25,6 +25,7 @@ public:
     static const Quaternion unitZ();
 
     static const Quaternion fromVector(const Vector3& vec);
+    static const Quaternion fromEuler(const double yaw, const double pitch, const double roll);
     static const Quaternion fromEuler(const EulerAngles& eul);
     static const Quaternion fromAxisAngle(const Vector3& axis, const double angle);
     static const Quaternion fromAxisAngle(const AxisAngle& aa);

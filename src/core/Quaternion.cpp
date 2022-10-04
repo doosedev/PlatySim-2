@@ -3,7 +3,7 @@
 #ifdef ARDUINO
 #include "Arduino.h"
 #else
-#include <math.h>
+#include <cmath>
 #endif
 
 const Quaternion Quaternion::zero()
@@ -42,15 +42,15 @@ const Quaternion Quaternion::fromVector(const Vector3& vec)
     return ret;
 }
 
-const Quaternion Quaternion::fromEuler(const EulerAngles& eul)
+const Quaternion Quaternion::fromEuler(const double yaw, const double pitch, const double roll)
 {
-    double cy = cos(eul.yaw / 2);
-    double cp = cos(eul.pitch / 2);
-    double cr = cos(eul.roll / 2);
+    double cy = cos(yaw / 2);
+    double cp = cos(pitch / 2);
+    double cr = cos(roll / 2);
 
-    double sy = sin(eul.yaw / 2);
-    double sp = sin(eul.pitch / 2);
-    double sr = sin(eul.roll / 2);
+    double sy = sin(yaw / 2);
+    double sp = sin(pitch / 2);
+    double sr = sin(roll / 2);
 
     Quaternion ret((cr * cp * cy) + (sr * sp * sy),
                    (sr * cp * cy) - (cr * sp * sy),
@@ -59,7 +59,12 @@ const Quaternion Quaternion::fromEuler(const EulerAngles& eul)
     return ret;
 }
 
-const Quaternion fromAxisAngle(const Vector3& axis, const double angle)
+const Quaternion Quaternion::fromEuler(const EulerAngles& eul)
+{
+    return Quaternion::fromEuler(eul.yaw, eul.pitch, eul.roll);
+}
+
+const Quaternion Quaternion::fromAxisAngle(const Vector3& axis, const double angle)
 {
     if(axis == Vector3::zero() || angle == 0)
     {
@@ -73,12 +78,12 @@ const Quaternion fromAxisAngle(const Vector3& axis, const double angle)
     return ret;
 }
 
-const Quaternion fromAxisAngle(const AxisAngle& aa)
+const Quaternion Quaternion::fromAxisAngle(const AxisAngle& aa)
 {
     return Quaternion::fromAxisAngle(aa.axis, aa.angle);
 }
 
-const Quaternion fromRotationVector(const Vector3& rot)
+const Quaternion Quaternion::fromRotationVector(const Vector3& rot)
 {
     if(rot == Vector3::zero())
     {
@@ -182,11 +187,17 @@ Quaternion& Quaternion::operator-=(const Quaternion& rhs)
 Quaternion& Quaternion::operator*=(const Quaternion& rhs)
 {
     // the hamilton product
-    Quaternion ret(w * rhs.w - x * rhs.x - y * rhs.y - z * rhs.z,
-                   w * rhs.x + x * rhs.w + y * rhs.z - z * rhs.y,
-                   w * rhs.y - x * rhs.z + y * rhs.w + z * rhs.x,
-                   w * rhs.z + x * rhs.y - y * rhs.x + z * rhs.w);
-    return ret;
+    double newW = w * rhs.w - x * rhs.x - y * rhs.y - z * rhs.z;
+    double newX = w * rhs.x + x * rhs.w + y * rhs.z - z * rhs.y;
+    double newY = w * rhs.y - x * rhs.z + y * rhs.w + z * rhs.x;
+    double newZ = w * rhs.z + x * rhs.y - y * rhs.x + z * rhs.w;
+
+    w = newW;
+    x = newX;
+    y = newY;
+    z = newZ;
+
+    return *this;
 }
 
 double Quaternion::norm() const

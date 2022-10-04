@@ -5,9 +5,13 @@
 =========================*/
 
 #include <iostream>
+#include <cmath>
 #include "core/Vector3.hpp"
+#include "core/Quaternion.hpp"
 
 int main()
 {
-    return 0;
+    Vector3 test = Vector3::unitX();
+
+    std::cout << Quaternion::fromEuler(0., 90. * (M_PI / 180.), 0.).rotate(test) << std::endl;
 }
