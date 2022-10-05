@@ -45,6 +45,17 @@ public:
         return *this;
     }
 
+    bool operator==(const Quaternion& rhs) const {
+        return ((w == rhs.w) && (x == rhs.x) && (y == rhs.y) && (z == rhs.z));
+    };
+    bool operator!=(const Quaternion& rhs) const {
+        return ((w != rhs.w) || (x != rhs.x) || (y != rhs.y) || (z != rhs.z));
+    }
+
+    const Quaternion& operator-() const {
+        return Quaternion(*this) *= -1;
+    }
+
     Quaternion& operator*=(const double rhs);
     const Quaternion operator*(const double rhs) const { return Quaternion(*this) *= rhs; }
     Quaternion& operator/=(const double rhs);

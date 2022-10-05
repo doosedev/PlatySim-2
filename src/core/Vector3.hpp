@@ -33,6 +33,10 @@ public:
         return ((x != rhs.x) || (y != rhs.y) || (z != rhs.z));
     }
 
+    const Vector3& operator-() const {
+        return Vector3(*this) *= -1;
+    }
+
     Vector3& operator*=(const double rhs);
     const Vector3 operator*(const double rhs) const { return Vector3(*this) *= rhs; }
     Vector3& operator/=(const double rhs);
