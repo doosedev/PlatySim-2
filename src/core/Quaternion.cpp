@@ -230,8 +230,10 @@ const Vector3 Quaternion::rotate(const Vector3& vec) const
     return rotVecQuat.toVector();
 }
 
+#ifndef ARDUINO
 std::ostream& operator<<(std::ostream& os, const Quaternion& obj)
 {
     os << "(" << obj.w << "," << obj.x << "," << obj.y << "," << obj.z << ")";
     return os;
 }
+#endif

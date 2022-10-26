@@ -70,6 +70,12 @@ double Vector3::norm() const
 Vector3& Vector3::normalize()
 {
     double mag = norm();
+
+    if(mag == 0)
+    {
+        return *this;
+    }
+
     x /= mag;
     y /= mag;
     z /= mag;
@@ -93,8 +99,10 @@ const double Vector3::angle(const Vector3& rhs) const
     return acos(dot(rhs) / (norm() * rhs.norm()));
 }
 
+#ifndef ARDUINO
 std::ostream& operator<<(std::ostream& os, const Vector3& obj)
 {
     os << "(" << obj.x << "," << obj.y << "," << obj.z << ")";
     return os;
 }
+#endif
